@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <h2 style="margin-bottom: 20px;">Projects</h2>
+            <button class="btn" onclick="showNewProjectModal()" style="width: 100%; margin-bottom: 20px;">
+                + New Project
+            </button>
+            <div id="projects-list"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1 id="current-project-title">My Todos</h1>
+                    <p id="current-project-count">0 todos</p>
+                </div>
+                <button class="btn" onclick="showNewTodoModal()">+ New Todo</button>
+            </div>
+            <div class="todo-container">
+                <div id="todos-list"></div>
+                <div id="empty-state" class="empty-state" style="display: none;">
+                    <h3>No todos yet</h3>
+                    <p>Create your first todo to get started!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <h3>New Project</h3>
+            <div class="form-group">
+                <label for="project-name">Project Name</label>
+                <input type="text" id="project-name" class="form-control" placeholder="Enter project name">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('project-modal')">Cancel</button>
+                <button class="btn" onclick="createProject()">Create Project</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="todo-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="todo-modal-title">New Todo</h3>
+            <div class="form-group">
+                <label for="todo-title">Title</label>
+                <input type="text" id="todo-title" class="form-control" placeholder="Enter todo title">
+            </div>
+            <div class="form-group">
+                <label for="todo-description">Description</label>
+                <textarea id="todo-description" class="form-control" placeholder="Enter description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="todo-due-date">Due Date</label>
+                <input type="date" id="todo-due-date" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="todo-priority">Priority</label>
+                <select id="todo-priority" class="form-control">
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="todo-notes">Notes</label>
+                <textarea id="todo-notes" class="form-control" placeholder="Additional notes"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Checklist</label>
+                <div id="checklist-items"></div>
+                <button type="button" class="btn btn-sm" onclick="addChecklistItem()">+ Add Item</button>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('todo-modal')">Cancel</button>
+                <button class="btn btn-danger" id="delete-todo-btn" onclick="deleteTodo()" style="display: none;">Delete</button>
+                <button class="btn" onclick="saveTodo()">Save Todo</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="src/index.js"></script>
+</body>
+</html>
