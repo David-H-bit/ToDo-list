@@ -12,8 +12,10 @@
         <div class="listmodal-content">
             <h2>Add new list</h2>
             <input type="text" placeholder="List name" id="listmodalInput">
-            <button id="addListmodal">Add</button>
-            <button id="closeListmodal">Close</button>
+            <div>
+                <button id="addListmodal">Add</button>
+                <button id="closeListmodal">Close</button>
+            </div>
         </div>
     </div>
     <div class="taskmodal hidden" id="taskmodal">
@@ -30,8 +32,11 @@
             <input type="date" id="due-date">
             <h2>Notes</h2>
             <input type="text" name="notes" id="noteInput">
-            <button id="addTaskmodal">Add</button>
-            <button id="closeTaskmodal">Close</button>
+            <div>
+                <button id="addTaskmodal">Add</button>
+                <button id="closeTaskmodal">Close</button>
+            </div>
+            
         </div>
     </div>
     <nav>
@@ -52,7 +57,9 @@
         <div class="sidebar-wrapper">
             <h1>DoneZo</h1>
             <div class="top-wrapper">
-                <h2>Inbox</h2>
+                <div class="title-wrapper">
+                    <h2>Inbox</h2>
+                </div>
                 <ul>
                     <li data-list-id="1" class="activatedList">Total Tasks</li>
                     <li data-list-id="2">Completed</li>
@@ -64,11 +71,13 @@
                     <h2>Lists</h2>
                     <button id="addList">+</button>
                 </div>
-                <ul class="ulListsWrapper">
+                <ul class="ulListsWrapper customListArea">
                     <li data-list-id="4">📁 Work</li>
                     <li data-list-id="5">🏠 Personal</li>
                 </ul>
-                <h2>Filters</h2>
+                <div class="title-wrapper">
+                    <h2>Filters</h2>
+                </div>
                 <ul class="ulListsWrapper">
                     <li data-list-id="6">🔥 High Priority</li> 
                     <li data-list-id="7">🟡 Medium Priority</li>

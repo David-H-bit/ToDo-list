@@ -16,6 +16,7 @@ const heroHeader = document.querySelector(".hero-header")
 
 const taskButton = document.createElement("button");
 taskButton.classList.add("taskbutton");
+taskButton.style.display = "none";
 taskButton.textContent = "Add task";
 heroHeader.append(taskButton);
 
@@ -288,6 +289,10 @@ document.addEventListener("click", (e) => {
         e.target.classList.add("activatedList");
         const listId = e.target.getAttribute("data-list-id");
         currentListId = listId;
+
+        const isInCustomListArea = e.target.closest(".customListArea") !== null;
+        taskButton.style.display = isInCustomListArea ? "inline-block" : "none";
+
         showHeroScreen(listId);   
     }
 });
