@@ -8,11 +8,11 @@ const addList = document.getElementById("addList");
 const listmodal = document.getElementById("listmodal");
 const taskmodal = document.getElementById("taskmodal");
 const closeListmodal = document.getElementById("closeListmodal");
-const addListmodal = document.getElementById("addListmodal");
+const addListmodal = document.getElementById("addListmodal");       
 const closeTaskmodal = document.getElementById("closeTaskmodal");
 const addTaskmodal = document.getElementById("addTaskmodal");
 const hero = document.querySelector(".hero");
-const heroHeader = document.querySelector(".hero-header")
+const heroHeader = document.querySelector(".hero-header");
 
 const taskButton = document.createElement("button");
 taskButton.classList.add("taskbutton");
@@ -21,6 +21,7 @@ taskButton.textContent = "Add task";
 heroHeader.append(taskButton);
 
 let currentListId = "1";
+let currentTaskDisplay = "lists";
 
 const lists = [
     {
@@ -65,6 +66,14 @@ const lists = [
     },
 ];
 
+function saveLists() {
+    
+}
+
+function loadLists() {
+    
+}
+
 function findListsById(id){
     return lists.find(list => list.id === id);
 }
@@ -96,13 +105,29 @@ function showHeroScreen(listId){
                 taskElement.classList.add("completedCrossedOut");
             }
 
-            taskElement.classList.add("task");
-            taskHeader.classList.add("taskTitle");
+            if(currentTaskDisplay === "lists"){
+                taskElement.classList.remove("taskForCards");
+                taskHeader.classList.remove("taskTitleForCards");
+                taskContainer.classList.remove("taskContainerForCards");
+                taskElement.classList.add("taskForLists"); 
+                taskHeader.classList.add("taskTitleForLists");
+                taskContainer.classList.add("taskContainerForLists");
+            }
+            else if (currentTaskDisplay === "cards"){
+                taskElement.classList.remove("taskForLists");
+                taskHeader.classList.remove("taskTitleForLists");
+                taskContainer.classList.remove("taskContainerForLists");
+                taskElement.classList.add("taskForCards"); 
+                taskHeader.classList.add("taskTitleForCards");
+                taskContainer.classList.add("taskContainerForCards");
+            }
+
+            miniTaskContainer.classList.add("miniTaskContainer");
 
             taskHeader.innerHTML = `<h3>${task.name}</h3>`           
             
             taskElement.innerHTML = `
-            <p><b>Due:</b> ${task.dueDate || "No due date"}</p>
+            <p><b>Due:</b> ${task.dueDate || "No due date"} | ${task.dueTime || "No due time"}</p>
             <p><b>Priority:</b> ${task.priority}</p>
             <p><b>Notes:</b> ${task.note || "No notes"}</p>
             `;
@@ -162,6 +187,18 @@ function showHeroScreen(listId){
     }
 }
 
+const searchInput = document.querySelector("[data-search]");
+
+searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+
+    document.querySelectorAll(".miniTaskContainer").forEach((container) => {
+        const taskName = container.querySelector("h3")?.textContent.toLowerCase();
+        const isVisible = taskName.includes(value);
+        container.style.display = isVisible ? "flex" : "none";
+    });
+});
+
 addList.addEventListener("click", ()=>{
     listmodal.classList.remove("hidden");
 })
@@ -180,14 +217,20 @@ closeTaskmodal.addEventListener("click", ()=>{
 
 addTaskmodal.addEventListener("click", ()=>{
     const taskText = document.getElementById("taskmodalInput").value.trim();
+    if(taskText.length > 14 || taskText.length <= 3){
+        window.alert("Title has to be between 3 and 14 characters");
+        return;
+    }
     const priorityValue = document.getElementById("priority").value;
     const dueDate = document.getElementById("due-date").value;
+    const dueTime = document.getElementById("due-time").value;
     const notes = document.getElementById("noteInput").value.trim();
 
     const task = {
         id: Date.now().toString(),
         name: taskText,
         dueDate: dueDate || null,
+        dueTime: dueTime || null,
         priority: priorityValue,
         completed: false,
         note: notes
@@ -220,6 +263,7 @@ addTaskmodal.addEventListener("click", ()=>{
     document.getElementById("taskmodalInput").value = "";
     document.getElementById("priority").value = "low-priority";
     document.getElementById("due-date").value = "";
+    document.getElementById("due-time").value = "";
     document.getElementById("noteInput").value = "";
     document.getElementById("taskmodal").classList.add("hidden");
 
@@ -245,13 +289,22 @@ addListmodal.addEventListener("click", () => {
     edit.classList.add("edit");
     remove.classList.add("remove");
 
-    edit.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const newText = window.prompt("Edit list name:")
-        if(newText && newText.trim() && newText.trim().length < 14){
-            li.firstChild.textContent = newText.trim();
+edit.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const newText = window.prompt("Edit list name:");
+    if (newText && newText.trim() && newText.trim().length < 14) {
+        const trimmed = newText.trim();
+        li.firstChild.textContent = trimmed;
+
+        const listId = li.getAttribute("data-list-id"); 
+        const list = findListsById(listId);
+        if (list) {
+            list.name = trimmed;
+            showHeroScreen(list.id);
         }
-    })
+        console.log(listId, list);
+    }
+});
 
     remove.addEventListener("click", (r) => {
         r.stopPropagation();
@@ -270,10 +323,14 @@ addListmodal.addEventListener("click", () => {
 
 listsmode.addEventListener("click", () => {
     toggleExclusives(listsmode, cardsmode);
+    currentTaskDisplay = "lists";
+    showHeroScreen(currentListId);
 });
 
 cardsmode.addEventListener("click", () => {
     toggleExclusives(cardsmode, listsmode);
+    currentTaskDisplay = "cards";
+    showHeroScreen(currentListId);
 });
 
 darkbtn.addEventListener("click", () => {
@@ -300,4 +357,4 @@ document.addEventListener("click", (e) => {
     }
 });
 
-showHeroScreen("1");
+showHeroScreen(currentListId);

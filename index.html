@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>DoneZo</title>
 </head>
 <body>
     <div class="listmodal hidden" id="listmodal">
@@ -30,6 +30,8 @@
             </select>
             <h2>Due date</h2>
             <input type="date" id="due-date">
+            <h2>Due time</h2>
+            <input type="time" id="due-time">
             <h2>Notes</h2>
             <input type="text" name="notes" id="noteInput">
             <div>
@@ -42,7 +44,7 @@
     <nav>
         <div class="search-wrapper">
             <label for="search">Search</label>
-            <input type="search" id="search">
+            <input type="search" id="search" data-search>
         </div>
         <div class="displaymode">
             <button class="listsmode activated-btn">Lists</button>

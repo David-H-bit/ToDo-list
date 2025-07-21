@@ -42,6 +42,7 @@ body {
     margin: 0;
 }
 
+
 .listmodal, .taskmodal {
     position: fixed;
     top: 0; left: 0;
@@ -298,7 +299,16 @@ li:hover, .activatedList{
     box-shadow: 1px 1px 1px var(--title-color);
 }
 
-.taskContainer{
+.taskContainerForCards{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 45px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.taskContainerForLists{
     display: flex;
     flex-direction: column;
     margin-top: 10px;
@@ -308,10 +318,11 @@ li:hover, .activatedList{
 .miniTaskContainer{
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-top: 10px;
 }
 
-.task {
+.taskForLists {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -321,24 +332,44 @@ li:hover, .activatedList{
     padding: 1rem;
     margin: 1rem auto;
     border-radius: 8px;
-    width: 90%;     
+    width: 90%;    
 }
 
-.taskTitle{
+.taskForCards {         
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-color);
+    border: 1px solid var(--title-color);
+    padding: 25px;
+    border-radius: 8px;   
+    gap: 20px;
+    width: 20vw;
+    height: 350px;
+    overflow-y: scroll;
+}
+
+.taskTitleForLists, .taskTitleForCards{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 1rem auto;
-    width: 90%;
+    margin-left: 0;
+    text-align: center;
 }
 
-.taskTitle h3{
+.taskTitleForCards h3{
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: var(--title-color);
+}
+
+.taskTitleForLists h3{
     font-weight: 500;
     font-size: 1.3rem;
     color: var(--title-color);
 }
 
-.task p {
+.taskForLists p, .taskForCards p{
     margin: 5px;
     font-size: 0.95rem;
     color: var(--text-color);
