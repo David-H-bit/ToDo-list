@@ -6,6 +6,9 @@
     --completed: #22c55e;
     --high-priority: #dc2626;
     --low-priority: #2563eb;
+    --edit-btn: rgba(16, 185, 129, 0.7);
+    --delete-btn: rgba(239, 68, 68, 0.7);   
+    --complete-btn: rgba(59, 131, 246, 0.7);  
 }
 
 [data-theme="dark"] {
@@ -16,6 +19,9 @@
     --completed: #4ADE80;
     --high-priority: #EF4444;
     --low-priority: #3B82F6;
+    --edit-btn: rgba(52, 211, 153, 0.7); 
+    --delete-btn: rgba(248, 113, 113, 0.7);  
+    --complete-btn: rgba(96, 165, 250, 0.7); 
 }
 
 
@@ -51,7 +57,7 @@ body {
     display: none;
 }
 
-.listmodal-content, .taskmodal-content{
+.listmodal-content, .taskmodal-content{     
     background-color: var(--nav-and-side-color);
     padding: 20px;
     border-radius: 10px;
@@ -140,7 +146,7 @@ nav{
     padding: 5px;
     border-radius: 10px;
     border: 1px solid white;
-}
+}       
 
 .displaymode button, .theme button{
     border: 0;
@@ -308,16 +314,27 @@ li:hover, .activatedList{
 .task {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--bg-color);
     border: 1px solid var(--title-color);
     padding: 1rem;
-    margin-bottom: 1rem;
+    margin: 1rem auto;
     border-radius: 8px;
+    width: 90%;     
 }
 
 .taskTitle{
-    margin: 0 0 0.5rem;
-    font-size: 1.1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1rem auto;
+    width: 90%;
+}
+
+.taskTitle h3{
+    font-weight: 500;
+    font-size: 1.3rem;
     color: var(--title-color);
 }
 
@@ -328,25 +345,31 @@ li:hover, .activatedList{
 }
 
 .editTask, .deleteTask, .completeTask{
-    cursor: pointer;
+    background-color: var(--bg-color);
+    padding: 10px;
     color: var(--text-color);
-    padding: 2px 5px;
-    border: 1px solid var(--title-color);
-    border-radius: 8px;
-    background-color: transparent;
-    transition: 0.4s;
+    border: 1px solid var(--text-color);
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px var(--title-color);
+    cursor: pointer;
+    transition: 0.1s;
 }
 
 .editTask:hover{
-    background-color: var(--completed);
+    background-color: var(--edit-btn);
 }
 
 .deleteTask:hover{
-    background-color: var(--high-priority);
+    background-color: var(--delete-btn);
 }
 
 .completeTask:hover{
-    background: var(--low-priority);
+    background: var(--complete-btn);
+}
+
+.editTask:active, .deleteTask:active, .completeTask:active{
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 1px var(--title-color);
 }
 
 .completedCrossedOut h3, .completedCrossedOut p{

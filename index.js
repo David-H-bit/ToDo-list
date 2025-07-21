@@ -129,7 +129,10 @@ function showHeroScreen(listId){
 
             deleteBtn.addEventListener("click", () => {
                 if (confirm("Delete this task?")) {
-                    list.tasks.splice(index, 1); // remove task
+                    const taskId = task.id;
+                    lists.forEach((l) => {
+                        l.tasks = l.tasks.filter(t => t.id !== taskId);
+                    })
                     showHeroScreen(list.id); // re-render
                 }
             });
