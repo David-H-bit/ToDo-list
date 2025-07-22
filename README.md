@@ -12,6 +12,7 @@ A simple, modern todo list application with task management, custom lists, and p
 - ✅ **Modal Interface**: Clean modal dialogs for adding tasks and lists
 - ✅ **Due Dates**: Set due dates and time for tasks 
 - ✅ **Task Notes**: Add notes to tasks for additional context
+- ✅ **Editing tasks**: You can now edit the whole task rather than just the title
 
 ## Project Status
 
@@ -20,13 +21,11 @@ This is a **work-in-progress** todo application with core functionality implemen
 ## Known Issues / limitations
 
 - LocalStorage does not work as of right now
-- Task editing is very limited
 
 ## Planned Features
 
 - 🔲 **Data Persistence**: Save tasks to localStorage
 - 🔲 **Task Categories**: Better organization and tagging system
-- 🔲 **Task sorting**: Sort tasks by due date, creation date or priority
 - 🔲 **Overdue warning**: highlight in task if due date/time is almost overdue
 - 🔲 **Limit indicators**: limits and requirement for task/list names, due date,...
 - 🔲 **Other**: Undo for recent deletes, Keyboard shortcuts, Character limit indicators,

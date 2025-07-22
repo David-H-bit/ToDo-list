@@ -38,7 +38,28 @@
                 <button id="addTaskmodal">Add</button>
                 <button id="closeTaskmodal">Close</button>
             </div>
-            
+        </div>
+    </div>
+    <div class="editTaskmodal hidden" id="editTaskmodal">      
+        <div class="taskmodal-content">
+            <h2>Edit task name</h2>
+            <input type="text" placeholder="Task name" id="editTaskmodalInput">   
+            <h2>Edit priority</h2>
+            <select name="priority" id="editPriority">
+                <option value="low-priority">🟢 Low Priority</option>
+                <option value="medium-priority">🟡 Medium Priority</option>
+                <option value="high-priority">🔥 High Priority</option>
+            </select>
+            <h2>Change due date</h2>
+            <input type="date" id="edit-due-date">
+            <h2>change due time</h2>
+            <input type="time" id="edit-due-time">   
+            <h2>Change notes</h2>
+            <input type="text" name="notes" id="edit-noteInput"> 
+            <div>
+                <button id="editTaskSaveBtn">Save</button>   
+                <button id="closeEditTaskmodal">Close</button>  
+            </div>
         </div>
     </div>
     <nav>

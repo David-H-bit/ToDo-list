@@ -22,6 +22,7 @@ heroHeader.append(taskButton);
 
 let currentListId = "1";
 let currentTaskDisplay = "lists";
+let currentTaskBeingEdited = null;
 
 const lists = [
     {
@@ -72,6 +73,15 @@ function saveLists() {
 
 function loadLists() {
     
+}
+
+function getPriorityDisplay(priority) {
+    const priorityMap = {
+        "low-priority": "🟢 Low Priority",
+        "medium-priority": "🟡 Medium Priority", 
+        "high-priority": "🔥 High Priority"
+    };
+    return priorityMap[priority] || priority;
 }
 
 function findListsById(id){
@@ -128,7 +138,7 @@ function showHeroScreen(listId){
             
             taskElement.innerHTML = `
             <p><b>Due:</b> ${task.dueDate || "No due date"} | ${task.dueTime || "No due time"}</p>
-            <p><b>Priority:</b> ${task.priority}</p>
+            <p><b>Priority:</b> ${getPriorityDisplay(task.priority)}</p>
             <p><b>Notes:</b> ${task.note || "No notes"}</p>
             `;
 
@@ -145,11 +155,14 @@ function showHeroScreen(listId){
             completeBtn.classList.add("completeTask")
 
             editBtn.addEventListener("click", () => {
-                const newName = prompt("Edit task name:");
-                if (newName && newName.trim() !== ""){
-                    task.name = newName.trim();
-                    showHeroScreen(list.id);
-                }
+                currentTaskBeingEdited = task;
+
+                document.getElementById("editTaskmodalInput").value = task.name;
+                document.getElementById("edit-due-date").value = task.dueDate || "";
+                document.getElementById("edit-due-time").value = task.dueTime || "";
+                document.getElementById("edit-noteInput").value = task.note || "";
+                document.getElementById("editPriority").value = task.priority || "low-priority";
+                document.getElementById("editTaskmodal").classList.remove("hidden");
             })
 
             deleteBtn.addEventListener("click", () => {
@@ -255,7 +268,12 @@ addTaskmodal.addEventListener("click", ()=>{
     if (priorityList) priorityList.tasks.push(task);
 
     const convertedDueDate = new Date(document.getElementById("due-date").value);
-    if (convertedDueDate < new Date()){
+    const convertedDueTime = new Date(document.getElementById("due-time").value);
+
+    const combinedString = `${convertedDueDate}${convertedDueTime}`;
+    const dueDateTime = new Date(combinedString);
+    const now = new Date();
+    if (dueDateTime <= now){
         const dateList = findListsById("3");
         dateList.tasks.push(task);
     }
@@ -330,7 +348,7 @@ listsmode.addEventListener("click", () => {
 cardsmode.addEventListener("click", () => {
     toggleExclusives(cardsmode, listsmode);
     currentTaskDisplay = "cards";
-    showHeroScreen(currentListId);
+    showHeroScreen(currentListId);      
 });
 
 darkbtn.addEventListener("click", () => {
@@ -341,6 +359,61 @@ darkbtn.addEventListener("click", () => {
 lightbtn.addEventListener("click", () => {
     toggleExclusives(lightbtn, darkbtn);
     document.documentElement.setAttribute("data-theme", "light");
+});
+
+document.getElementById("editTaskSaveBtn").addEventListener("click", () => {
+    if (!currentTaskBeingEdited) return;
+
+    const oldPriority = currentTaskBeingEdited.priority;
+    const newPriority = document.getElementById("editPriority").value;
+
+    currentTaskBeingEdited.name = document.getElementById("editTaskmodalInput").value.trim();
+    currentTaskBeingEdited.dueDate = document.getElementById("edit-due-date").value;
+    currentTaskBeingEdited.dueTime = document.getElementById("edit-due-time").value;
+    currentTaskBeingEdited.note = document.getElementById("edit-noteInput").value.trim();
+    currentTaskBeingEdited.priority = newPriority;
+
+        // If priority changed, update priority lists
+    if (oldPriority !== newPriority) {
+        // Remove from old priority list
+        const oldPriorityMap = {
+            "low-priority": "8",
+            "medium-priority": "7", 
+            "high-priority": "6"
+        };
+        const oldPriorityListId = oldPriorityMap[oldPriority];
+        const oldPriorityList = findListsById(oldPriorityListId);
+        if (oldPriorityList) {
+            const taskIndex = oldPriorityList.tasks.findIndex(t => t.id === currentTaskBeingEdited.id);
+            if (taskIndex !== -1) {
+                oldPriorityList.tasks.splice(taskIndex, 1);
+            }
+        }
+
+        // Add to new priority list
+        const newPriorityMap = {
+            "low-priority": "8",
+            "medium-priority": "7",
+            "high-priority": "6"
+        };
+        const newPriorityListId = newPriorityMap[newPriority];
+        const newPriorityList = findListsById(newPriorityListId);
+        if (newPriorityList) {
+            // Only add if not already there
+            if (!newPriorityList.tasks.find(t => t.id === currentTaskBeingEdited.id)) {
+                newPriorityList.tasks.push(currentTaskBeingEdited);
+            }
+        }
+    }
+
+    document.getElementById("editTaskmodal").classList.add("hidden");
+    currentTaskBeingEdited = null;
+    showHeroScreen(currentListId);
+});
+
+document.getElementById("closeEditTaskmodal").addEventListener("click", () => {
+    document.getElementById("editTaskmodal").classList.add("hidden");
+    currentTaskBeingEdited = null;
 });
 
 document.addEventListener("click", (e) => {
