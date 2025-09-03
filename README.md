@@ -1,4 +1,4 @@
-# Todo List App (DoneZo)
+# Todo List App
 
 A simple, modern todo list application with task management, custom lists, and priority filtering.
 
