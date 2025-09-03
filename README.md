@@ -16,19 +16,7 @@ A simple, modern todo list application with task management, custom lists, and p
 
 ## Project Status
 
-This is a **work-in-progress** todo application with core functionality implemented. The basic task management system is functional, but several features are still in development.
-
-## Known Issues / limitations
-
-- LocalStorage does not work as of right now
-
-## Planned Features
-
-- 🔲 **Data Persistence**: Save tasks to localStorage
-- 🔲 **Task Categories**: Better organization and tagging system
-- 🔲 **Overdue warning**: highlight in task if due date/time is almost overdue
-- 🔲 **Limit indicators**: limits and requirement for task/list names, due date,...
-- 🔲 **Other**: Undo for recent deletes, Keyboard shortcuts, Character limit indicators,
+This is a **finished** todo application with core functionality implemented.
 
 ## Technologies Used
 
